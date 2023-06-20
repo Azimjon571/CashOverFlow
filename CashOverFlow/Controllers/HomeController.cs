@@ -9,7 +9,7 @@ namespace CashOverFlow.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HomeController: ControllerBase
+    public class HomeController : ControllerBase
     {
         [HttpGet]
         public string Get() => "Cash flows....";

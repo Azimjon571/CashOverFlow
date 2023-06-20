@@ -14,7 +14,7 @@ namespace CashOverFlow
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)=>
+        public Startup(IConfiguration configuration) =>
             Configuration = configuration;
 
         public IConfiguration Configuration { get; }
@@ -33,8 +33,8 @@ namespace CashOverFlow
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(
-                    name:"v1", 
-                    info:operApiInfo);
+                    name: "v1",
+                    info: operApiInfo);
             });
         }
 
@@ -47,14 +47,14 @@ namespace CashOverFlow
 
                 app.UseSwaggerUI(option =>
                     option.SwaggerEndpoint(
-                        url:"/swagger/v1/swagger.json",
-                        name:"CashOverFlow v1"));
+                        url: "/swagger/v1/swagger.json",
+                        name: "CashOverFlow v1"));
             }
 
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
                 endpoints.MapControllers());
         }
