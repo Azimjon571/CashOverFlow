@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System.Linq;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Job;
 using Microsoft.EntityFrameworkCore;
@@ -15,5 +16,7 @@ namespace CashOverFlow.Brokers.Storages
 
         public async ValueTask<Job> InsertJobAsync(Job job)=>
             await InsertAsync(job);
+        public IQueryable<Job> SelectAlljob() =>
+            SelectAll<Job>();
     }
 }
