@@ -15,5 +15,6 @@ namespace CashOverFlow.Brokers.Storages
         ValueTask<Language> InsertLanguageAsync(Language language);
         IQueryable<Language> SelectAllLanguages();
         ValueTask<Language> SelectLanguageByIdAsync(Guid Id);
+        ValueTask<Language> UpdateLanguageAsync(Language language);
     }
 }

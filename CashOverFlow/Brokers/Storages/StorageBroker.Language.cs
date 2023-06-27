@@ -21,5 +21,7 @@ namespace CashOverFlow.Brokers.Storages
             SelectAll<Language>();
         public async ValueTask<Language> SelectLanguageByIdAsync(Guid Id)=>
             await SelectAsync<Language>(Id);
+        public async ValueTask<Language> UpdateLanguageAsync(Language language) =>
+            await UpdateAsync(language);
     }
 }
