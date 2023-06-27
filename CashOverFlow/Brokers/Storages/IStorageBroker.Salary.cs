@@ -5,15 +5,11 @@
 
 using System.Threading.Tasks;
 using CashOverFlow.Models.Salary;
-using Microsoft.EntityFrameworkCore;
 
 namespace CashOverFlow.Brokers.Storages
 {
-    public partial class StorageBroker
+    public partial interface IStorageBroker
     {
-        public DbSet<Salary> Salaries { get; set; }
-
-        public async ValueTask<Salary> InsertSalaryAsync(Salary salary) =>
-            await InsertAsync(salary);
+        ValueTask<Salary> InsertSalaryAsync(Salary salary);
     }
 }
