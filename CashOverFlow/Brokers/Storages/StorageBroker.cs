@@ -23,8 +23,6 @@ namespace CashOverFlow.Brokers.Storages
             string connectingString = this.configuration.GetConnectionString("DefaultConnection");
 
             optionsBuilder.UseSqlServer(connectingString);
-            
-            
         }
         public override void Dispose()
         {}
