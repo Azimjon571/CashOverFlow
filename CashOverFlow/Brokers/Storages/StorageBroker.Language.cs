@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Languages;
 using Microsoft.EntityFrameworkCore;
@@ -15,5 +16,8 @@ namespace CashOverFlow.Brokers.Storages
 
         public async ValueTask<Language> InsertLanguageAsync(Language language) =>
             await InsertAsync(language);
+        public async ValueTask<Language> SelectLanguageByIdAsync(Guid Id)=>
+            await SelectAsync<Language>(Id);
+
     }
 }
