@@ -29,7 +29,7 @@ namespace CashOverFlow
             };
 
             services.AddControllers();
-            services.AddTransient<StorageBroker>();
+            services.AddTransient<IStorageBroker, StorageBroker>();
 
 
             services.AddSwaggerGen(c =>
