@@ -37,6 +37,13 @@ namespace CashOverFlow.Brokers.Storages
             return broker.Set<T>();
         }
 
+        public async ValueTask<T> SelectAsync<T>(params object[] objectIds) where T : class
+        {
+            var broker = new StorageBroker(configuration);
+
+            return await broker.FindAsync<T>(objectIds);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectingString = this.configuration.GetConnectionString("DefaultConnection");
