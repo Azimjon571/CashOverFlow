@@ -20,7 +20,7 @@ namespace CashOverFlow.Brokers.Storages
         public IQueryable<Job> SelectAlljobAsync() =>
             SelectAll<Job>();
 
-        public async ValueTask<Job> SelectJobById(Guid Id) =>
+        public async ValueTask<Job> SelectJobByIdAsync(Guid Id) =>
             await SelectAsync<Job>(Id);
     }
 }
