@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Job;
@@ -16,7 +17,10 @@ namespace CashOverFlow.Brokers.Storages
 
         public async ValueTask<Job> InsertJobAsync(Job job)=>
             await InsertAsync(job);
-        public IQueryable<Job> SelectAlljob() =>
+        public IQueryable<Job> SelectAlljobAsync() =>
             SelectAll<Job>();
+
+        public async ValueTask<Job> SelectJobById(Guid Id) =>
+            await SelectAsync<Job>(Id);
     }
 }
