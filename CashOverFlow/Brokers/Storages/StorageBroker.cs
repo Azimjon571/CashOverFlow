@@ -53,6 +53,15 @@ namespace CashOverFlow.Brokers.Storages
             return @object;
         }
 
+        public async ValueTask<T> DeleteAsync<T>(T @object)
+        {
+            var broker = new StorageBroker(configuration);
+            broker.Entry(@object).State = EntityState.Deleted;
+            await broker.SaveChangesAsync();
+
+            return @object;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectingString = this.configuration.GetConnectionString("DefaultConnection");
