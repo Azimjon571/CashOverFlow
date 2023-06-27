@@ -15,5 +15,6 @@ namespace CashOverFlow.Brokers.Storages
         ValueTask<Job> InsertJobAsync(Job job);
         IQueryable<Job> SelectAlljobAsync();
         ValueTask<Job> SelectJobByIdAsync(Guid Id);
+        ValueTask<Job>UpdateJobAsync(Job job);
     }
 }

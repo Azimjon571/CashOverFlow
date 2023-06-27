@@ -17,10 +17,14 @@ namespace CashOverFlow.Brokers.Storages
 
         public async ValueTask<Job> InsertJobAsync(Job job)=>
             await InsertAsync(job);
+        
         public IQueryable<Job> SelectAlljobAsync() =>
             SelectAll<Job>();
 
         public async ValueTask<Job> SelectJobByIdAsync(Guid Id) =>
             await SelectAsync<Job>(Id);
+
+        public async ValueTask<Job> UpdateJobAsync(Job job) =>
+            await UpdateAsync(job);
     }
 }
