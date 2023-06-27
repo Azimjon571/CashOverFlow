@@ -15,5 +15,6 @@ namespace CashOverFlow.Brokers.Storages
         ValueTask<Location> InsertLocationAsync(Location location);
         IQueryable<Location> SelectLocationAsync();
         ValueTask<Location> SelectByIdLocationAsync(Guid Id);
+        ValueTask<Location> UpdateLocationAsync(Location location);
     }
 }
