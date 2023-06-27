@@ -4,6 +4,7 @@
 //=================================================
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Languages;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +17,9 @@ namespace CashOverFlow.Brokers.Storages
 
         public async ValueTask<Language> InsertLanguageAsync(Language language) =>
             await InsertAsync(language);
+        public IQueryable<Language> SelectAllLanguages() =>
+            SelectAll<Language>();
         public async ValueTask<Language> SelectLanguageByIdAsync(Guid Id)=>
             await SelectAsync<Language>(Id);
-
     }
 }
