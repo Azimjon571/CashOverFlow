@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System.Threading.Tasks;
 using EFxceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,15 @@ namespace CashOverFlow.Brokers.Storages
         {
             this.configuration = configuration;
             this.Database.Migrate();
+        }
+
+        public async ValueTask<T> InsertAsync<T>(T @object)
+        {
+            var broker = new StorageBroker(configuration);
+            broker.Entry(@object).State = EntityState.Added;
+            await broker.SaveChangesAsync();
+
+            return @object;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
