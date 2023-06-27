@@ -13,7 +13,7 @@ namespace CashOverFlow.Brokers.Storages
     {
         public DbSet<Location> Locations { get; set; }
 
-        public async ValueTask<Location> InsertLocationsAsync(Location location) =>
+        public async ValueTask<Location> InsertLocationAsync(Location location) =>
             await InsertAsync(location);
     }
 }
