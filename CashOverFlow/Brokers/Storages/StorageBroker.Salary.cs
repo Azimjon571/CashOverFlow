@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Salary;
@@ -19,6 +20,8 @@ namespace CashOverFlow.Brokers.Storages
 
         public IQueryable<Salary> SelectSalaryAsync() =>
             SelectAll<Salary>();
-            
+
+        public async ValueTask<Salary> SelectSalaryByIdAsync(Guid salaryId) =>
+            await SelectAsync<Salary>(salaryId);
     }
 }
