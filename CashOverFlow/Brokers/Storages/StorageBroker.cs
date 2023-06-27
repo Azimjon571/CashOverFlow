@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System.Linq;
 using System.Threading.Tasks;
 using EFxceptions;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,14 @@ namespace CashOverFlow.Brokers.Storages
 
             return @object;
         }
+
+        public IQueryable<T> SelectAll<T>() where T : class 
+        {
+            var broker = new StorageBroker(configuration);
+
+            return broker.Set<T>();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectingString = this.configuration.GetConnectionString("DefaultConnection");
