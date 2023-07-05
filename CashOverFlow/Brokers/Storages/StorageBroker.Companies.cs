@@ -23,5 +23,8 @@ namespace CashOverFlow.Brokers.Storages
 
         public async ValueTask<Company> SelectCompanyByIdAsync(Guid companyId) =>
             await SelectAsync<Company>(companyId);
+
+        public async ValueTask<Company> UpdateCompanyAsync(Company company) =>
+            await UpdateAsync(company);
     }
 }

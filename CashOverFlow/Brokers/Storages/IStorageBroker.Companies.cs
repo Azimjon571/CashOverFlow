@@ -15,5 +15,6 @@ namespace CashOverFlow.Brokers.Storages
         ValueTask<Company> InsertCompanyAsync(Company company);
         IQueryable<Company> SelectAllCompanies();
         ValueTask<Company> SelectCompanyByIdAsync(Guid companyId);
+        ValueTask<Company> UpdateCompanyAsync(Company company);
     }
 }
