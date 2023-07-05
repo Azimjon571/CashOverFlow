@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System.Linq;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Companies;
 using Microsoft.EntityFrameworkCore;
@@ -15,5 +16,8 @@ namespace CashOverFlow.Brokers.Storages
 
         public async ValueTask<Company> InsertCompanyAsync(Company company) =>
             await InsertAsync(company);
+
+        public IQueryable<Company> SelectAllCompanies() =>
+            SelectAll<Company>();
     }
 }
