@@ -5,15 +5,11 @@
 
 using System.Threading.Tasks;
 using CashOverFlow.Models.Reviews;
-using Microsoft.EntityFrameworkCore;
 
 namespace CashOverFlow.Brokers.Storages
 {
-    public partial class StorageBroker
+    public partial interface IStorageBroker
     {
-        public DbSet<Review> Reviews { get; set; }
-
-        public async ValueTask<Review> InsertReviewAsync(Review review) =>
-            await InsertAsync(review);
+        ValueTask<Review> InsertReviewAsync(Review review);
     }
 }
