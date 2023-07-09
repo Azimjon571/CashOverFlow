@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +30,7 @@ namespace CashOverFlow
             };
 
             services.AddControllers();
-            services.AddTransient<IStorageBroker, StorageBroker>();
-
+            AddBrokers(services);
 
             services.AddSwaggerGen(c =>
             {
@@ -59,6 +59,11 @@ namespace CashOverFlow
 
             app.UseEndpoints(endpoints =>
                 endpoints.MapControllers());
+        }
+        private static void AddBrokers(IServiceCollection services)
+        {
+            services.AddTransient<IStorageBroker, StorageBroker>();
+            services.AddTransient<ILoggingBroker, LoggingBroker>();
         }
     }
 }
