@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
 using CashOverFlow.Models.Locations;
+using CashOverFlow.Models.Locations.Exceptions;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace CashOverFlow.Services.Foundations.Locations
@@ -25,7 +26,26 @@ namespace CashOverFlow.Services.Foundations.Locations
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<Location>AddLocationAsync(Location location)=>
-            await this.storageBroker.InsertLocationAsync(location);
+        public async ValueTask<Location>AddLocationAsync(Location location)
+        {
+            try
+            {
+                if (location is null)
+                {
+                    throw new NullLocationException();
+                }
+
+                return await this.storageBroker.InsertLocationAsync(location);
+            }
+            catch (NullLocationException nullLocationException)
+            {
+                var locationValidationException = new
+                    LocationValidationException(nullLocationException);
+
+                this.loggingBroker.LogError(locationValidationException);
+
+                throw locationValidationException;
+            }
+        }
     }
 }
