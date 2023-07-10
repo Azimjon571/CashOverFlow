@@ -40,6 +40,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                     Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
