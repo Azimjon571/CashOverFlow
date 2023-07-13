@@ -24,6 +24,10 @@ namespace CashOverFlow.Services.Foundations.Locations
             {
                 throw CreateAndLogValidationException(nullLocationException);
             }
+            catch(InvalidLocationException invalidLocationException)
+            {
+                throw CreateAndLogValidationException(invalidLocationException);
+            }
         }
 
         private LocationValidationException CreateAndLogValidationException(Xeption exception)
