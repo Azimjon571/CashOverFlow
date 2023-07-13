@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using CashOverFlow.Brokers.DateTimes;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
 using Microsoft.AspNetCore.Builder;
@@ -64,6 +65,7 @@ namespace CashOverFlow
         {
             services.AddTransient<IStorageBroker, StorageBroker>();
             services.AddTransient<ILoggingBroker, LoggingBroker>();
+            services.AddTransient<IDateTimeBroker, DateTimeBroker>();
         }
     }
 }
