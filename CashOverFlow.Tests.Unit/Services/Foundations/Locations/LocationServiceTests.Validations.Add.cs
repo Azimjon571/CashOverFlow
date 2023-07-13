@@ -42,6 +42,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
         [Theory]
@@ -99,15 +100,16 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
-        public async Task ShouldThrowValtidationExceptionOnAddIfCreateDateIsNotSameAsUpdatedDateAndLogItAsync()
+        public async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotSameAsUpdatedDateAndLogItAsync()
         {
-            //given
+            // given
             int randomMinutes = GetRandomNumber();
             DateTimeOffset randomDate = GetRandomDateTimeoffSet();
-            Location randomLocation = CreateRandomLocation();
+            Location randomLocation = CreateRandomLocation(randomDate);
             Location invalidLocation = randomLocation;
             invalidLocation.UpdateDate = randomDate.AddMinutes(randomMinutes);
             var invalidLocationException = new InvalidLocationException();
@@ -116,26 +118,21 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                 key: nameof(Location.CreateDate),
                 values: $"Date is not same as {nameof(Location.UpdateDate)}");
 
-            var expectedLocationValidationException =
-                new LocationValidationException(invalidLocationException);
+            var expectedLocationValidationException = new LocationValidationException(invalidLocationException);
 
-            //when
-            ValueTask<Location> addLocationTask =
-                this.locationService.AddLocationAsync(invalidLocation);
+            // when
+            ValueTask<Location> addLocationTask = this.locationService.AddLocationAsync(invalidLocation);
 
             LocationValidationException actualLocationValidationException =
                 await Assert.ThrowsAsync<LocationValidationException>(addLocationTask.AsTask);
 
-            //then
+            // then
             actualLocationValidationException.Should().BeEquivalentTo(expectedLocationValidationException);
 
-            this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExcepionAs(expectedLocationValidationException))), 
-                    Times.Once);
+            this.loggingBrokerMock.Verify(broker => broker.LogError(It.Is(SameExcepionAs(
+                expectedLocationValidationException))), Times.Once);
 
-            this.storageBrokerMock.Verify(broker =>
-                broker.InsertLocationAsync(It.IsAny<Location>()),
-                    Times.Never);
+            this.storageBrokerMock.Verify(broker => broker.InsertLocationAsync(It.IsAny<Location>()), Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();

@@ -4,6 +4,8 @@
 //=================================================
 
 using System;
+using System.Data;
+using System.Reflection.Metadata;
 using CashOverFlow.Models.Locations;
 using CashOverFlow.Models.Locations.Exceptions;
 
@@ -19,7 +21,14 @@ namespace CashOverFlow.Services.Foundations.Locations
                 (Rule: IsInvalid(location.Id), Parameter: nameof(location.Id)),
                 (Rule: IsInvalid(location.Name), Parameter: nameof(location.Name)),
                 (Rule: IsInvalid(location.CreateDate), Parameter: nameof(location.CreateDate)),
-                (Rule: IsInvalid(location.UpdateDate), Parameter: nameof(location.UpdateDate)));
+                (Rule: IsInvalid(location.UpdateDate), Parameter: nameof(Location.UpdateDate)),
+
+                (Rule: IsInvalid(
+                    firstDate: location.CreateDate,
+                    secondDate: location.UpdateDate,
+                    secondDateName: nameof(Location.UpdateDate)),
+
+                Parameter: nameof(Location.CreateDate)));
         }
         private static void ValidateLocationNotNull(Location location)
         {
@@ -46,6 +55,15 @@ namespace CashOverFlow.Services.Foundations.Locations
             Condition = date == default,
             Message = "Date is required"
         };
+
+        private static dynamic IsInvalid(
+            DateTimeOffset firstDate,
+            DateTimeOffset secondDate,
+            string secondDateName) => new
+            {
+                Condition = firstDate != secondDate,
+                Message = $"Date is not same as {secondDateName}"
+            };
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
