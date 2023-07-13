@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Locations;
 using CashOverFlow.Models.Locations.Exceptions;
@@ -98,6 +99,47 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowValtidationExceptionOnAddIfCreateDateIsNotSameAsUpdatedDateAndLogItAsync()
+        {
+            //given
+            int randomMinutes = GetRandomNumber();
+            DateTimeOffset randomDate = GetRandomDateTimeoffSet();
+            Location randomLocation = CreateRandomLocation();
+            Location invalidLocation = randomLocation;
+            invalidLocation.UpdateDate = randomDate.AddMinutes(randomMinutes);
+            var invalidLocationException = new InvalidLocationException();
+
+            invalidLocationException.AddData(
+                key: nameof(Location.CreateDate),
+                values: $"Date is not same as {nameof(Location.UpdateDate)}");
+
+            var expectedLocationValidationException =
+                new LocationValidationException(invalidLocationException);
+
+            //when
+            ValueTask<Location> addLocationTask =
+                this.locationService.AddLocationAsync(invalidLocation);
+
+            LocationValidationException actualLocationValidationException =
+                await Assert.ThrowsAsync<LocationValidationException>(addLocationTask.AsTask);
+
+            //then
+            actualLocationValidationException.Should().BeEquivalentTo(expectedLocationValidationException);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExcepionAs(expectedLocationValidationException))), 
+                    Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertLocationAsync(It.IsAny<Location>()),
+                    Times.Never);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }

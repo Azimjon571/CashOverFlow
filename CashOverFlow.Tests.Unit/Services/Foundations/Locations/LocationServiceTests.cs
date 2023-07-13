@@ -36,12 +36,16 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
         }
         private DateTimeOffset GetRandomDateTimeoffSet() =>
             new DateTimeRange(earliestDate: DateTime.UnixEpoch).GetValue();
+        private int GetRandomNumber() =>
+            new IntRange(min: 2, max: 9).GetValue();
 
         private Expression<Func<Xeption, bool>> SameExcepionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
 
         private Location CreateRandomLocation() =>
             CreateLocationFiller(dates: GetRandomDateTimeoffSet()).Create();
+        private Location CreateRandomLocation(DateTimeOffset dates) =>
+            CreateLocationFiller(dates).Create();
 
         private Filler<Location> CreateLocationFiller(DateTimeOffset dates)
         {
