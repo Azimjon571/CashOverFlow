@@ -3,11 +3,9 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
-using CashOverFlow.Models.Locations.Exceptions;
-using CashOverFlow.Models.Locations;
 using System;
-using System.Data;
-using System.Reflection.Metadata;
+using CashOverFlow.Models.Locations;
+using CashOverFlow.Models.Locations.Exceptions;
 
 namespace CashOverFlow.Services.Foundations.Locations
 {
@@ -36,7 +34,7 @@ namespace CashOverFlow.Services.Foundations.Locations
             Condition = Id == Guid.Empty,
             Message = "Id is required"
         };
-        
+
         private static dynamic IsInvalid(string text) => new
         {
             Condition = String.IsNullOrWhiteSpace(text),
@@ -49,7 +47,7 @@ namespace CashOverFlow.Services.Foundations.Locations
             Message = "Date is required"
         };
 
-        private static void Validate(params(dynamic Rule, string Parameter)[] validations)
+        private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidLocationException = new InvalidLocationException();
 

@@ -28,14 +28,14 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                     ReturnsAsync(expectedLocation);
 
             //when
-            Location actualLocation= await this.locationService
+            Location actualLocation = await this.locationService
                 .AddLocationAsync(inputLocation);
 
             //then
 
             actualLocation.Should().BeEquivalentTo(expectedLocation);
 
-            this.storageBrokerMock.Verify(broker=>
+            this.storageBrokerMock.Verify(broker =>
                 broker.InsertLocationAsync(inputLocation),
                     Times.Once);
 

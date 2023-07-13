@@ -3,7 +3,6 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
-using System;
 using System.Threading.Tasks;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
@@ -11,7 +10,7 @@ using CashOverFlow.Models.Locations;
 
 namespace CashOverFlow.Services.Foundations.Locations
 {
-    public partial class LocationService: ILocationService
+    public partial class LocationService : ILocationService
     {
         private readonly IStorageBroker storageBroker;
         private readonly ILoggingBroker loggingBroker;

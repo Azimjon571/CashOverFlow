@@ -7,10 +7,10 @@ using Xeptions;
 
 namespace CashOverFlow.Models.Locations.Exceptions
 {
-    public class NullLocationException: Xeption
+    public class NullLocationException : Xeption
     {
         public NullLocationException()
-            :base(message:"Location is null.")
-        {}
+            : base(message: "Location is null.")
+        { }
     }
 }

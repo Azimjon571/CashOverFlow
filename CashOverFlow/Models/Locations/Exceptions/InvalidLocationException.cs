@@ -7,10 +7,10 @@ using Xeptions;
 
 namespace CashOverFlow.Models.Locations.Exceptions
 {
-    public class InvalidLocationException:Xeption
+    public class InvalidLocationException : Xeption
     {
         public InvalidLocationException()
-            :base(message:"Location is incvalid.")
-        {}
+            : base(message: "Location is incvalid.")
+        { }
     }
 }

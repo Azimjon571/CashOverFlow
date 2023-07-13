@@ -17,7 +17,7 @@ namespace CashOverFlow.Brokers.Storages
         public async ValueTask<Review> InsertReviewAsync(Review review) =>
             await InsertAsync(review);
 
-        public IQueryable<Review> SelectAllReviews()=>
+        public IQueryable<Review> SelectAllReviews() =>
             SelectAll<Review>();
     }
 }

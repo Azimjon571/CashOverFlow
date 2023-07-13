@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using CashOverFlow.Models.Locations;
 using CashOverFlow.Models.Locations.Exceptions;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Moq;
 using Xunit;
 
@@ -77,7 +76,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
 
             var expectedLocationValidationException =
                 new LocationValidationException(invalidLocationException);
-           
+
             //when
             ValueTask<Location> addLocationTask =
                 this.locationService.AddLocationAsync(invalidLocation);
@@ -93,8 +92,8 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                 broker.LogError(It.Is(SameExcepionAs(expectedLocationValidationException))),
                     Times.Once);
 
-            this.storageBrokerMock.Verify(broker=>
-                broker.InsertLocationAsync(It.IsAny<Location>()), 
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertLocationAsync(It.IsAny<Location>()),
                     Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();

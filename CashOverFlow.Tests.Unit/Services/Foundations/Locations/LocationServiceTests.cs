@@ -28,7 +28,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
 
             this.locationService = new LocationService(
                 storageBroker: this.storageBrokerMock.Object,
-                loggingBroker:this.loggingBrokerMock.Object);
+                loggingBroker: this.loggingBrokerMock.Object);
         }
         private DateTimeOffset GetRandomDateTimeoffSet() =>
             new DateTimeRange(earliestDate: DateTime.UnixEpoch).GetValue();
@@ -37,7 +37,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             actualException => actualException.SameExceptionAs(expectedException);
 
         private Location CreateRandomLocation() =>
-            CreateLocationFiller(dates:GetRandomDateTimeoffSet()).Create();
+            CreateLocationFiller(dates: GetRandomDateTimeoffSet()).Create();
 
         private Filler<Location> CreateLocationFiller(DateTimeOffset dates)
         {

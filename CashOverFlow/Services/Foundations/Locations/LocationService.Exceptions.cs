@@ -14,7 +14,7 @@ namespace CashOverFlow.Services.Foundations.Locations
     {
         private delegate ValueTask<Location> ReturningLocationFuntion();
 
-        private async ValueTask<Location>TryCatch(ReturningLocationFuntion returningLocationFuntion)
+        private async ValueTask<Location> TryCatch(ReturningLocationFuntion returningLocationFuntion)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace CashOverFlow.Services.Foundations.Locations
             {
                 throw CreateAndLogValidationException(nullLocationException);
             }
-            catch(InvalidLocationException invalidLocationException)
+            catch (InvalidLocationException invalidLocationException)
             {
                 throw CreateAndLogValidationException(invalidLocationException);
             }

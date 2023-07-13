@@ -10,6 +10,6 @@ namespace CashOverFlow.Services.Foundations.Locations
 {
     public interface ILocationService
     {
-        ValueTask<Location>AddLocationAsync(Location location);
+        ValueTask<Location> AddLocationAsync(Location location);
     }
 }
