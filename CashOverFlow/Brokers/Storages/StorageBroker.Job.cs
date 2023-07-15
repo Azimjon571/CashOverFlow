@@ -15,9 +15,9 @@ namespace CashOverFlow.Brokers.Storages
     {
         public DbSet<Job> Jobs { get; set; }
 
-        public async ValueTask<Job> InsertJobAsync(Job job)=>
+        public async ValueTask<Job> InsertJobAsync(Job job) =>
             await InsertAsync(job);
-        
+
         public IQueryable<Job> SelectAlljobAsync() =>
             SelectAll<Job>();
 

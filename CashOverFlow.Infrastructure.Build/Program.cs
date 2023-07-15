@@ -3,7 +3,6 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
-using System;
 using System.Collections.Generic;
 using ADotNet.Clients;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
@@ -34,11 +33,11 @@ namespace CashOverFlow.Infrastructure.Build
 
                 Jobs = new Jobs
                 {
-                    Build=new BuildJob
+                    Build = new BuildJob
                     {
-                        RunsOn=BuildMachines.WindowsLatest,
+                        RunsOn = BuildMachines.WindowsLatest,
 
-                        Steps=new List<GithubTask>
+                        Steps = new List<GithubTask>
                         {
                             new CheckoutTaskV2
                             {

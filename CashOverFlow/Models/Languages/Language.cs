@@ -11,8 +11,8 @@ namespace CashOverFlow.Models.Languages
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public LanguageType LanguageType  { get; set; }
-        public DateTimeOffset CreateDate { get; set; }
-        public DateTimeOffset UpdateDate { get; set; }
+        public LanguageType LanguageType { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
+        public DateTimeOffset UpdatedDate { get; set; }
     }
 }

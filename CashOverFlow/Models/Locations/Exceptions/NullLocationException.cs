@@ -3,12 +3,14 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
-using Xunit;
+using Xeptions;
 
-namespace CashOverFlow.Tests.Unit
+namespace CashOverFlow.Models.Locations.Exceptions
 {
-    internal class DeleteMe
+    public class NullLocationException : Xeption
     {
-        public void ShouldBeTrue() => Assert.True(true);
+        public NullLocationException()
+            : base(message: "Location is null.")
+        { }
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace CashOverFlow.Brokers.Storages
 {
-    public partial class StorageBroker: EFxceptionsContext, IStorageBroker
+    public partial class StorageBroker : EFxceptionsContext, IStorageBroker
     {
         private readonly IConfiguration configuration;
 
@@ -30,7 +30,7 @@ namespace CashOverFlow.Brokers.Storages
             return @object;
         }
 
-        public IQueryable<T> SelectAll<T>() where T : class 
+        public IQueryable<T> SelectAll<T>() where T : class
         {
             var broker = new StorageBroker(configuration);
 
@@ -69,6 +69,6 @@ namespace CashOverFlow.Brokers.Storages
             optionsBuilder.UseSqlServer(connectingString);
         }
         public override void Dispose()
-        {}
+        { }
     }
 }
