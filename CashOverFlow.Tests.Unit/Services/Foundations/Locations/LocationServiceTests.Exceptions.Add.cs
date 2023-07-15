@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Locations;
 using CashOverFlow.Models.Locations.Exceptions;
@@ -96,6 +97,44 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfServerErrorOccursAndLogItAsync()
+        {
+            //given
+            Location someLocation = CreateRandomLocation();
+            var serviceException = new Exception();
+            var failedLocationServiceException = 
+                new FailedLocationServiceException(serviceException);
+
+            var expectedLocationServiceException = new
+                LocationServiceException(failedLocationServiceException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset()).Throws(serviceException);
+
+            //when
+            ValueTask<Location> addLocationTask = 
+                this.locationService.AddLocationAsync(someLocation);
+
+            LocationServiceException actualLocationServiceException =
+                await Assert.ThrowsAsync<LocationServiceException>(addLocationTask.AsTask);
+            //then
+
+            actualLocationServiceException.Should().
+                BeEquivalentTo(expectedLocationServiceException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExcepionAs(expectedLocationServiceException))),
+                    Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
