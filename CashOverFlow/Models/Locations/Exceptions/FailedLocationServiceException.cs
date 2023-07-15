@@ -8,10 +8,10 @@ using Xeptions;
 
 namespace CashOverFlow.Models.Locations.Exceptions
 {
-    public class FailedLocationServiceException:Xeption
+    public class FailedLocationServiceException : Xeption
     {
         public FailedLocationServiceException(Exception innerException)
-            :base(message:"Location service error occured, contact support.",innerException)
-        {}
+            : base(message: "Location service error occured, contact support.", innerException)
+        { }
     }
 }

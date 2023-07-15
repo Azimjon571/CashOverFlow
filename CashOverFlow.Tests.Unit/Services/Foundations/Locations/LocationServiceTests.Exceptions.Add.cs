@@ -66,17 +66,17 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             Location someLocation = CreateRandomLocation();
             var duplicateKeyException = new DuplicateKeyException(someMessage);
 
-            var alreadyExistsLocationException = new 
+            var alreadyExistsLocationException = new
                 AlreadyExistsLocationException(duplicateKeyException);
 
-            var expectedLocationDependencyValidationException = new 
+            var expectedLocationDependencyValidationException = new
                 LocationDependencyValidationException(alreadyExistsLocationException);
 
             this.dateTimeBrokerMock.Setup(broker =>
             broker.GetCurrentDateTimeOffset()).Throws(duplicateKeyException);
 
             //when
-            ValueTask<Location> addLocationTask = 
+            ValueTask<Location> addLocationTask =
                 this.locationService.AddLocationAsync(someLocation);
 
             LocationDependencyValidationException actualLocationDependencyValidationException =
@@ -105,7 +105,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             //given
             Location someLocation = CreateRandomLocation();
             var serviceException = new Exception();
-            var failedLocationServiceException = 
+            var failedLocationServiceException =
                 new FailedLocationServiceException(serviceException);
 
             var expectedLocationServiceException = new
@@ -115,7 +115,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                 broker.GetCurrentDateTimeOffset()).Throws(serviceException);
 
             //when
-            ValueTask<Location> addLocationTask = 
+            ValueTask<Location> addLocationTask =
                 this.locationService.AddLocationAsync(someLocation);
 
             LocationServiceException actualLocationServiceException =

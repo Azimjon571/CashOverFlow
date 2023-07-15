@@ -38,14 +38,14 @@ namespace CashOverFlow.Services.Foundations.Locations
 
                 throw CreateAndLogCriticalDependencyException(failedLocationStorageException);
             }
-            catch(DuplicateKeyException duplicateKeyException)
+            catch (DuplicateKeyException duplicateKeyException)
             {
-                var alreadyExistsLocationException = new 
+                var alreadyExistsLocationException = new
                     AlreadyExistsLocationException(duplicateKeyException);
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsLocationException);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 var failedLocationServiceException = new
                     FailedLocationServiceException(exception);

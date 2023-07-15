@@ -3,15 +3,14 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
-using System;
 using Xeptions;
 
 namespace CashOverFlow.Models.Locations.Exceptions
 {
-    public class LocationDependencyValidationException:Xeption
+    public class LocationDependencyValidationException : Xeption
     {
         public LocationDependencyValidationException(Xeption innerException)
-            :base(message:"Location dependency validation error occurred, fix the error and try again.",innerException)
-        {}
+            : base(message: "Location dependency validation error occurred, fix the error and try again.", innerException)
+        { }
     }
 }
