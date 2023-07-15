@@ -5,11 +5,13 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using CashOverFlow.Brokers.DateTimes;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
 using CashOverFlow.Models.Locations;
 using CashOverFlow.Services.Foundations.Locations;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 using Xeptions;
@@ -47,6 +49,11 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                 minutesInPast
             };
         }
+        private SqlException CreateSqlException() =>
+            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+
+        private Expression<Func<Xeption, bool>> SameExcepionAs(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
 
         private DateTimeOffset GetRandomDateTimeoffSet() =>
             new DateTimeRange(earliestDate: DateTime.UnixEpoch).GetValue();
@@ -57,8 +64,6 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 9).GetValue();
 
-        private Expression<Func<Xeption, bool>> SameExcepionAs(Xeption expectedException) =>
-            actualException => actualException.SameExceptionAs(expectedException);
 
         private Location CreateRandomLocation() =>
             CreateLocationFiller(dates: GetRandomDateTimeoffSet()).Create();
