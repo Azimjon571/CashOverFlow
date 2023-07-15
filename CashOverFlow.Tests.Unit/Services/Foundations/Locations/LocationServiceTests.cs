@@ -49,6 +49,10 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                 minutesInPast
             };
         }
+
+        private string GetRandomString()=>
+            new MnemonicString().GetValue();
+
         private SqlException CreateSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 

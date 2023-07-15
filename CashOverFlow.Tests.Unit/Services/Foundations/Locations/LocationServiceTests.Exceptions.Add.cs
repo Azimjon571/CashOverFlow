@@ -6,6 +6,7 @@
 using System.Threading.Tasks;
 using CashOverFlow.Models.Locations;
 using CashOverFlow.Models.Locations.Exceptions;
+using EFxceptions.Models.Exceptions;
 using FluentAssertions;
 using Microsoft.Data.SqlClient;
 using Moq;
@@ -54,6 +55,47 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfDupLicateKeyErrorOccursAndLogItAsync()
+        {
+            //given
+            string someMessage = GetRandomString();
+            Location someLocation = CreateRandomLocation();
+            var duplicateKeyException = new DuplicateKeyException(someMessage);
+
+            var alreadyExistsLocationException = new 
+                AlreadyExistsLocationException(duplicateKeyException);
+
+            var expectedLocationDependencyValidationException = new 
+                LocationDependencyValidationException(alreadyExistsLocationException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset()).Throws(duplicateKeyException);
+
+            //when
+            ValueTask<Location> addLocationTask = 
+                this.locationService.AddLocationAsync(someLocation);
+
+            LocationDependencyValidationException actualLocationDependencyValidationException =
+                await Assert.ThrowsAsync<LocationDependencyValidationException>(addLocationTask.AsTask);
+
+            //then
+            actualLocationDependencyValidationException.Should()
+                .BeEquivalentTo(expectedLocationDependencyValidationException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExcepionAs(
+                    expectedLocationDependencyValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
