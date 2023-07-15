@@ -3,7 +3,6 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
-using System;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Locations;
 using CashOverFlow.Models.Locations.Exceptions;
@@ -30,23 +29,13 @@ namespace CashOverFlow.Services.Foundations.Locations
             {
                 throw CreateAndLogValidationException(invalidLocationException);
             }
-            catch(SqlException sqlException)
+            catch (SqlException sqlException)
             {
                 var failedLocationStorageException = new
                     FailedLocationStorageException(sqlException);
 
                 throw CreateAndLogCriticalDependencyException(failedLocationStorageException);
             }
-        }
-
-        private LocationDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
-        {
-            var locationDependencyException = new
-                LocationDependencyException(exception);
-
-            this.loggingBroker.LogCritical(locationDependencyException);
-
-            return locationDependencyException;
         }
 
         private LocationValidationException CreateAndLogValidationException(Xeption exception)
@@ -57,6 +46,16 @@ namespace CashOverFlow.Services.Foundations.Locations
             this.loggingBroker.LogError(locationValidationException);
 
             return locationValidationException;
+        }
+
+        private LocationDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
+        {
+            var locationDependencyException = new
+                LocationDependencyException(exception);
+
+            this.loggingBroker.LogCritical(locationDependencyException);
+
+            return locationDependencyException;
         }
     }
 }

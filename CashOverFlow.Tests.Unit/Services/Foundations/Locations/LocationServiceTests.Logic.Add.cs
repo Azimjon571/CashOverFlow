@@ -18,7 +18,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
         [Fact]
         public async Task ShouldAddLocationAsync()
         {
-            DateTimeOffset randomDateTime = GetRandomDateTimeoffSet(); 
+            DateTimeOffset randomDateTime = GetRandomDateTimeoffSet();
             Location randomLocation = CreateRandomLocation(randomDateTime);
             Location inputLocation = randomLocation;
             Location persistedLocation = inputLocation;

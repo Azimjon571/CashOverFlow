@@ -8,7 +8,6 @@ using CashOverFlow.Models.Locations;
 using CashOverFlow.Models.Locations.Exceptions;
 using FluentAssertions;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Moq;
 using Xunit;
 
@@ -20,7 +19,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
         public async Task ShouldThrowDependencyExceptionOnAddIfDependencyErrorOccursAndLogItAsync()
         {
             //given
-            Location someLocation=CreateRandomLocation();
+            Location someLocation = CreateRandomLocation();
             SqlException sqlException = CreateSqlException();
             var failedLocationStorageException = new FailedLocationStorageException(sqlException);
             var expectedLocationDependencyException = new LocationDependencyException(failedLocationStorageException);
@@ -40,7 +39,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                 BeEquivalentTo(expectedLocationDependencyException);
 
             this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTimeOffset(), 
+                broker.GetCurrentDateTimeOffset(),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>

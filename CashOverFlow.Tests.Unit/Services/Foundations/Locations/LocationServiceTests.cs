@@ -34,7 +34,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
 
             this.locationService = new LocationService(
                 storageBroker: this.storageBrokerMock.Object,
-                dateTimeBroker:this.dateTimeBrokerMock.Object,
+                dateTimeBroker: this.dateTimeBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
 
@@ -59,7 +59,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             new DateTimeRange(earliestDate: DateTime.UnixEpoch).GetValue();
 
         private static int GetRandomNegativeNumber() =>
-            -1*new IntRange(min: 2, max: 9).GetValue();
+            -1 * new IntRange(min: 2, max: 9).GetValue();
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 9).GetValue();

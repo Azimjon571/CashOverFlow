@@ -4,8 +4,6 @@
 //=================================================
 
 using System;
-using System.Data;
-using System.Reflection.Metadata;
 using CashOverFlow.Models.Locations;
 using CashOverFlow.Models.Locations.Exceptions;
 
@@ -20,15 +18,15 @@ namespace CashOverFlow.Services.Foundations.Locations
             Validate(
                 (Rule: IsInvalid(location.Id), Parameter: nameof(Location.Id)),
                 (Rule: IsInvalid(location.Name), Parameter: nameof(Location.Name)),
-                (Rule: IsInvalid(location.CreateDate), Parameter: nameof(Location.CreateDate)),
-                (Rule: IsInvalid(location.UpdateDate), Parameter: nameof(Location.UpdateDate)),
-                (Rule: IsNotRecent(location.CreateDate), Parameter: nameof(Location.CreateDate)),
+                (Rule: IsInvalid(location.CreatedDate), Parameter: nameof(Location.CreatedDate)),
+                (Rule: IsInvalid(location.UpdatedDate), Parameter: nameof(Location.UpdatedDate)),
+                (Rule: IsNotRecent(location.CreatedDate), Parameter: nameof(Location.CreatedDate)),
 
                 (Rule: IsInvalid(
-                    firstDate: location.CreateDate,
-                    secondDate: location.UpdateDate,
-                    secondDateName: nameof(Location.UpdateDate)),
-                Parameter: nameof(Location.CreateDate)));
+                    firstDate: location.CreatedDate,
+                    secondDate: location.UpdatedDate,
+                    secondDateName: nameof(Location.UpdatedDate)),
+                Parameter: nameof(Location.CreatedDate)));
         }
         private static void ValidateLocationNotNull(Location location)
         {

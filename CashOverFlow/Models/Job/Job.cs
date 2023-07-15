@@ -12,7 +12,7 @@ namespace CashOverFlow.Models.Job
         public Guid Id { get; set; }
         public string Title { get; set; }
         public Level Level { get; set; }
-        public DateTimeOffset CreateDate { get; set; }
-        public DateTimeOffset UpdateDate { get; set; }
+        public DateTimeOffset CreatedDate { get; set; }
+        public DateTimeOffset UpdatedDate { get; set; }
     }
 }

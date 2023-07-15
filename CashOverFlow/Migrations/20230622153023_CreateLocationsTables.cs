@@ -24,8 +24,8 @@ namespace CashOverFlow.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<int>(type: "int", nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {

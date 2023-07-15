@@ -34,13 +34,13 @@ namespace CashOverFlow.Migrations
                     b.Property<int>("Country")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreateDate")
+                    b.Property<DateTimeOffset>("CreatedDate")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("UpdateDate")
+                    b.Property<DateTimeOffset>("UpdatedDate")
                         .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");

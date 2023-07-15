@@ -69,11 +69,11 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                 values: "Text is required");
 
             invalidLocationException.AddData(
-                key: nameof(Location.CreateDate),
+                key: nameof(Location.CreatedDate),
                 values: "Date is required");
 
             invalidLocationException.AddData(
-                key: nameof(Location.UpdateDate),
+                key: nameof(Location.UpdatedDate),
                 values: "Date is required");
 
             var expectedLocationValidationException =
@@ -109,12 +109,12 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             DateTimeOffset randomDate = GetRandomDateTimeoffSet();
             Location randomLocation = CreateRandomLocation(randomDate);
             Location invalidLocation = randomLocation;
-            invalidLocation.UpdateDate = randomDate.AddMinutes(randomMinutes);
+            invalidLocation.UpdatedDate = randomDate.AddMinutes(randomMinutes);
             var invalidLocationException = new InvalidLocationException();
 
             invalidLocationException.AddData(
-                key: nameof(Location.CreateDate),
-                values: $"Date is not same as {nameof(Location.UpdateDate)}");
+                key: nameof(Location.CreatedDate),
+                values: $"Date is not same as {nameof(Location.UpdatedDate)}");
 
             var expectedLocationValidationException = new LocationValidationException(invalidLocationException);
 
@@ -155,7 +155,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             var invalidLocationException = new InvalidLocationException();
 
             invalidLocationException.AddData(
-                key: nameof(Location.CreateDate),
+                key: nameof(Location.CreatedDate),
                 values: "Date is not recent");
 
             var expectedLocationValidationException = new LocationValidationException(invalidLocationException);
