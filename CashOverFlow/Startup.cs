@@ -6,6 +6,7 @@
 using CashOverFlow.Brokers.DateTimes;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
+using CashOverFlow.Services.Foundations.Locations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,7 @@ namespace CashOverFlow
 
             services.AddControllers();
             AddBrokers(services);
+            AddServices(services);
 
             services.AddSwaggerGen(c =>
             {
@@ -66,6 +68,10 @@ namespace CashOverFlow
             services.AddTransient<IStorageBroker, StorageBroker>();
             services.AddTransient<ILoggingBroker, LoggingBroker>();
             services.AddTransient<IDateTimeBroker, DateTimeBroker>();
+        }
+        private static void AddServices(IServiceCollection services)
+        {
+            services.AddTransient<ILocationService, LocationService>();
         }
     }
 }
