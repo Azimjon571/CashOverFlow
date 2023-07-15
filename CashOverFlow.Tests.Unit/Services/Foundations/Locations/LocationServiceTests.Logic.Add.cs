@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Locations;
 using FluentAssertions;
@@ -17,27 +18,30 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
         [Fact]
         public async Task ShouldAddLocationAsync()
         {
-            //given
-            Location randomLocation = CreateRandomLocation();
+            DateTimeOffset randomDateTime = GetRandomDateTimeoffSet(); 
+            Location randomLocation = CreateRandomLocation(randomDateTime);
             Location inputLocation = randomLocation;
-            Location storageLocation = inputLocation;
-            Location expectedLocation = storageLocation.DeepClone();
+            Location persistedLocation = inputLocation;
+            Location expectedLocation = persistedLocation.DeepClone();
+
+            this.dateTimeBrokerMock.Setup(broker => broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTime);
 
             this.storageBrokerMock.Setup(broker =>
-                broker.InsertLocationAsync(inputLocation)).
-                    ReturnsAsync(expectedLocation);
+                broker.InsertLocationAsync(inputLocation)).ReturnsAsync(persistedLocation);
 
-            //when
+            // when
             Location actualLocation = await this.locationService
                 .AddLocationAsync(inputLocation);
 
-            //then
-
+            // then
             actualLocation.Should().BeEquivalentTo(expectedLocation);
 
+            this.dateTimeBrokerMock.Verify(broker => broker
+                .GetCurrentDateTimeOffset(), Times.Once);
+
             this.storageBrokerMock.Verify(broker =>
-                broker.InsertLocationAsync(inputLocation),
-                    Times.Once);
+                broker.InsertLocationAsync(inputLocation), Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

@@ -13,21 +13,21 @@ namespace CashOverFlow.Services.Foundations.Locations
 {
     public partial class LocationService
     {
-        private static void ValidateLocationOnAdd(Location location)
+        private void ValidateLocationOnAdd(Location location)
         {
             ValidateLocationNotNull(location);
 
             Validate(
-                (Rule: IsInvalid(location.Id), Parameter: nameof(location.Id)),
-                (Rule: IsInvalid(location.Name), Parameter: nameof(location.Name)),
-                (Rule: IsInvalid(location.CreateDate), Parameter: nameof(location.CreateDate)),
+                (Rule: IsInvalid(location.Id), Parameter: nameof(Location.Id)),
+                (Rule: IsInvalid(location.Name), Parameter: nameof(Location.Name)),
+                (Rule: IsInvalid(location.CreateDate), Parameter: nameof(Location.CreateDate)),
                 (Rule: IsInvalid(location.UpdateDate), Parameter: nameof(Location.UpdateDate)),
+                (Rule: IsNotRecent(location.CreateDate), Parameter: nameof(Location.CreateDate)),
 
                 (Rule: IsInvalid(
                     firstDate: location.CreateDate,
                     secondDate: location.UpdateDate,
                     secondDateName: nameof(Location.UpdateDate)),
-
                 Parameter: nameof(Location.CreateDate)));
         }
         private static void ValidateLocationNotNull(Location location)
@@ -65,7 +65,21 @@ namespace CashOverFlow.Services.Foundations.Locations
                 Message = $"Date is not same as {secondDateName}"
             };
 
-        private static void Validate(params (dynamic Rule, string Parameter)[] validations)
+        private dynamic IsNotRecent(DateTimeOffset date) => new
+        {
+            Condition = IsDateNotRecent(date),
+            Message = "Date is not recent"
+        };
+
+        private bool IsDateNotRecent(DateTimeOffset date)//10:51:20
+        {
+            DateTimeOffset currentDate = this.dateTimeBroker.GetCurrentDateTimeOffset();//10:51:00
+            TimeSpan timeDifference = currentDate.Subtract(date); //-20
+
+            return timeDifference.TotalSeconds is > 60 or < 0;
+        }
+
+        private void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidLocationException = new InvalidLocationException();
 
