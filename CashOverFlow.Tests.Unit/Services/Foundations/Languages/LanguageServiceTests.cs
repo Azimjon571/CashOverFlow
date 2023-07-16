@@ -4,6 +4,7 @@
 //=================================================
 
 using System;
+using System.Linq.Expressions;
 using CashOverFlow.Brokers.DateTimes;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
@@ -11,6 +12,7 @@ using CashOverFlow.Models.Languages;
 using CashOverFlow.Services.Foundations.Languages;
 using Moq;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
 {
@@ -43,6 +45,8 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
         private Language CreateRandomLanguage(DateTimeOffset dates) =>
             CreateLanguageFiller(dates).Create();
 
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
         private Filler<Language> CreateLanguageFiller(DateTimeOffset dates)
         {
             var filler = new Filler<Language>();
