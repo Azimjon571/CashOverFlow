@@ -12,7 +12,7 @@ using CashOverFlow.Models.Languages.Exceptions;
 
 namespace CashOverFlow.Services.Foundations.Languages
 {
-    public class LanguageService : ILanguageService
+    public partial class LanguageService : ILanguageService
     {
         private readonly IStorageBroker storageBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -26,26 +26,12 @@ namespace CashOverFlow.Services.Foundations.Languages
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<Language> AddLanguageAsync(Language language)
+        public ValueTask<Language> AddLanguageAsync(Language language) =>
+        TryCatch(async () =>
         {
-            try
-            {
-                if (language is null)
-                {
-                    throw new NullLanguageException();
-                }
-                return await this.storageBroker.InsertLanguageAsync(language);
-            }
-            catch (NullLanguageException nullLanguageException)
-            {
-                var languageValidationException = 
-                    new LanguageValidationException(nullLanguageException);
+            ValidationLanguageOnAdd(language);
 
-                this.loggingBroker.LogError(languageValidationException);
-
-                throw languageValidationException;
-            }
-            
-        }
+            return await this.storageBroker.InsertLanguageAsync(language);
+        });
     }
 }
