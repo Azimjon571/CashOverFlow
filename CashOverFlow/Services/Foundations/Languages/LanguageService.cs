@@ -25,9 +25,7 @@ namespace CashOverFlow.Services.Foundations.Languages
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<Language> AddLanguageAsync(Language language)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async ValueTask<Language> AddLanguageAsync(Language language) =>
+            await this.storageBroker.InsertLanguageAsync(language);
     }
 }
