@@ -24,6 +24,10 @@ namespace CashOverFlow.Services.Foundations.Languages
             {
                 throw CreateAndLogLanguageValidationException(nullLanguageException);
             }
+            catch(InvalidLanguageException invalidLanguageException)
+            {
+                throw CreateAndLogLanguageValidationException(invalidLanguageException);
+            }
         }
 
         private LanguageValidationException CreateAndLogLanguageValidationException(Xeption exception)
