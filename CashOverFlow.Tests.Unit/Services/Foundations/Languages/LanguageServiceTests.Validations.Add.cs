@@ -45,5 +45,59 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task FAIL(
+            string invalidText)
+        {
+            //given
+            var invalidLanguage = new Language
+            {
+                Name = invalidText
+            };
+
+            var invalidLanguageException = new InvalidLanguageException();
+
+            invalidLanguageException.AddData(
+                key: nameof(Language.Id),
+                values: "Id is required");
+
+            invalidLanguageException.AddData(
+                key: nameof(Language.CreatedDate),
+                values: "Date is required");
+            
+            invalidLanguageException.AddData(
+                key: nameof(Language.UpdatedDate),
+                values: "Date is required");
+
+            var expectedLanguageValidationException = 
+                new LanguageValidationException(invalidLanguageException);
+
+            //when
+            ValueTask<Language> addLanguageTask =
+                this.languageService.AddLanguageAsync(invalidLanguage);
+
+            LanguageValidationException actualLanguageValidationException =
+                await Assert.ThrowsAsync<LanguageValidationException>(addLanguageTask.AsTask);
+
+            //then
+            actualLanguageValidationException.Should().BeEquivalentTo(expectedLanguageValidationException);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLanguageValidationException))), 
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertLanguageAsync(It.IsAny<Language>()),
+                    Times.Never);
+
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
