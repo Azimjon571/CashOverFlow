@@ -50,7 +50,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public async Task FAIL(
+        public async Task ShouldThrowValidationExceptionOnAddIfLanguageIsInvalidAndLogItAsync(
             string invalidText)
         {
             //given
