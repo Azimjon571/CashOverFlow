@@ -6,6 +6,7 @@
 using System.Threading.Tasks;
 using CashOverFlow.Models.Languages;
 using CashOverFlow.Models.Languages.Exceptions;
+using EFxceptions.Models.Exceptions;
 using Microsoft.Data.SqlClient;
 using Xeptions;
 
@@ -36,6 +37,13 @@ namespace CashOverFlow.Services.Foundations.Languages
 
                 throw CreateAndLogLanguageCriticalDependencyException(failedLanguageStorageException);
             }
+            catch(DuplicateKeyException duplicateKeyException)
+            {
+                var alreadyExistsLanguageException = 
+                    new AlreadyExistsLanguageException(duplicateKeyException);
+
+                throw CreateAndLogDependencyValidationException(alreadyExistsLanguageException);
+            }
         }
 
         private LanguageValidationException CreateAndLogLanguageValidationException(Xeption exception)
@@ -53,6 +61,16 @@ namespace CashOverFlow.Services.Foundations.Languages
             this.loggingBroker.LogCritical(languageDependencyException);
 
             return languageDependencyException;
+        }
+
+        private LanguageDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+        {
+            var languageDependencyValidationException =
+                new LanguageDependencyValidationException(exception);
+
+            this.loggingBroker.LogError(languageDependencyValidationException);
+
+            return languageDependencyValidationException;
         }
     }
 }
