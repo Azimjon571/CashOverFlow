@@ -50,8 +50,12 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             };
         }
 
+        private static string GetRandomMessage() =>
+            new MnemonicString().GetValue();
+
         private SqlException CreateSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
+        
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 9).GetValue();
 
