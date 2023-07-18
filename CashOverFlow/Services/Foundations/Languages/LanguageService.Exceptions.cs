@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Languages;
 using CashOverFlow.Models.Languages.Exceptions;
@@ -44,6 +45,13 @@ namespace CashOverFlow.Services.Foundations.Languages
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsLanguageException);
             }
+            catch(Exception exception)
+            {
+                var failedLanguageServiceException = 
+                    new FailedLanguageServiceException(exception);
+
+                throw CreateAndLogServiceException(failedLanguageServiceException);
+            }
         }
 
         private LanguageValidationException CreateAndLogLanguageValidationException(Xeption exception)
@@ -71,6 +79,16 @@ namespace CashOverFlow.Services.Foundations.Languages
             this.loggingBroker.LogError(languageDependencyValidationException);
 
             return languageDependencyValidationException;
+        }
+
+        private LanguageServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var languageServiceException =
+                new LanguageServiceException(exception);
+
+            this.loggingBroker.LogError(languageServiceException);
+
+            return languageServiceException;
         }
     }
 }
