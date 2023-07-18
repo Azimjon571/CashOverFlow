@@ -56,7 +56,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
         private SqlException CreateSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
 
-        private Expression<Func<Xeption, bool>> SameExcepionAs(Xeption expectedException) =>
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
 
         private DateTimeOffset GetRandomDateTimeoffSet() =>

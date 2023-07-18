@@ -35,7 +35,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             actualLocationValidationException.Should().BeEquivalentTo(expectedLocationValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExcepionAs(expectedLocationValidationException))), Times.Once);
+                broker.LogError(It.Is(SameExceptionAs(expectedLocationValidationException))), Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
                 broker.InsertLocationAsync(It.IsAny<Location>()), Times.Never);
@@ -91,7 +91,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
                 .BeEquivalentTo(expectedLocationValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExcepionAs(
+                broker.LogError(It.Is(SameExceptionAs(
                     expectedLocationValidationException))), Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
@@ -132,7 +132,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
 
             this.dateTimeBrokerMock.Verify(broker => broker.GetCurrentDateTimeOffset(), Times.Once);
 
-            this.loggingBrokerMock.Verify(broker => broker.LogError(It.Is(SameExcepionAs(
+            this.loggingBrokerMock.Verify(broker => broker.LogError(It.Is(SameExceptionAs(
                 expectedLocationValidationException))), Times.Once);
 
             this.storageBrokerMock.Verify(broker => broker.InsertLocationAsync(It.IsAny<Location>()), Times.Never);
@@ -175,7 +175,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Locations
             this.dateTimeBrokerMock.Verify(broker => broker.GetCurrentDateTimeOffset(), Times.Once);
 
             this.loggingBrokerMock.Verify(broker => broker.LogError(It.Is(
-                SameExcepionAs(expectedLocationValidationException))), Times.Once);
+                SameExceptionAs(expectedLocationValidationException))), Times.Once);
 
             this.storageBrokerMock.Verify(broker => broker.InsertLocationAsync(It.IsAny<Location>()), Times.Never);
 

@@ -6,6 +6,7 @@
 using CashOverFlow.Brokers.DateTimes;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
+using CashOverFlow.Services.Foundations.Languages;
 using CashOverFlow.Services.Foundations.Locations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -72,6 +73,7 @@ namespace CashOverFlow
         private static void AddServices(IServiceCollection services)
         {
             services.AddTransient<ILocationService, LocationService>();
+            services.AddTransient<ILanguageService, LanguageService>();
         }
     }
 }
