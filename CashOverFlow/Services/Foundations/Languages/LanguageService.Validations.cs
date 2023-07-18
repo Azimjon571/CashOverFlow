@@ -16,7 +16,15 @@ namespace CashOverFlow.Services.Foundations.Languages
                 (Rule: IsInvalid(language.Id), Parameter: nameof(Language.Id)),
                 (Rule: IsInvalid(language.Name), Parameter: nameof(Language.Name)),
                 (Rule: IsInvalid(language.CreatedDate), Parameter: nameof(Language.CreatedDate)),
-                (Rule: IsInvalid(language.UpdatedDate), Parameter: nameof(Language.UpdatedDate)));
+                (Rule: IsInvalid(language.UpdatedDate), Parameter: nameof(Language.UpdatedDate)),
+
+                (Rule: IsInvalid(
+                    firstDate: language.CreatedDate,
+                    secondDate: language.UpdatedDate,
+                    secondDateName: nameof(Language.UpdatedDate)),
+
+                    Parameter: nameof(Language.CreatedDate)));
+        
         }
 
         private static void ValidationLanguageIsNotNull(Language language)
@@ -42,6 +50,15 @@ namespace CashOverFlow.Services.Foundations.Languages
             Condition = date == default,
             Message = "Date is required"
         };
+
+        private static dynamic IsInvalid(
+           DateTimeOffset firstDate,
+           DateTimeOffset secondDate,
+           string secondDateName) => new
+           {
+               Condition = firstDate != secondDate,
+               Message = $"Date is not same as {secondDateName}"
+           };
 
         private void Validate(params(dynamic Rule, string Parameter)[] validations)
         {

@@ -102,9 +102,9 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnAddIfLanguageCreatedDateIsNotSameAsUpdatedDateAndLogItAsync()
+        public async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotSameAsUpdatedDateAndLogItAsync()
         {
-            //given
+            // given
             int randomMinutes = GetRandomNumber();
             DateTimeOffset randomDate = GetRandomDateTimeOffset();
             Language randomLanguage = CreateRandomLanguage(randomDate);
@@ -114,37 +114,28 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
 
             invalidLanguageException.AddData(
                 key: nameof(Language.CreatedDate),
-                values: $"Date is not same as{nameof(Language.UpdatedDate)}");
+                values: $"Date is not same as {nameof(Language.UpdatedDate)}");
 
-            var expectedLanguageValidationException =
-                new LanguageValidationException(invalidLanguageException);
+            var expectedLanguageValidationException = new LanguageValidationException(invalidLanguageException);
 
-            this.dateTimeBrokerMock.Setup(broker =>
-                broker.GetCurrentDateTimeOffset()).Returns(randomDate);
+            // when
+            ValueTask<Language> addLanguageTask = this.languageService.AddLanguageAsync(invalidLanguage);
 
-            //when
-            ValueTask<Language> addLanguageTask =
-                this.languageService.AddLanguageAsync(invalidLanguage);
-
-            LanguageValidationException actualLanguageValidationException = 
-                await Assert.ThrowsAsync<LanguageValidationException>(
-                    addLanguageTask.AsTask);
+            LanguageValidationException actualLanguageValidationException =
+                await Assert.ThrowsAsync<LanguageValidationException>(addLanguageTask.AsTask);
 
             //then
-            actualLanguageValidationException.Should().BeEquivalentTo(
-                expectedLanguageValidationException);
-
-            this.dateTimeBrokerMock.Verify(broker =>
-                broker.GetCurrentDateTimeOffset(), Times.Once);
+            actualLanguageValidationException.Should().BeEquivalentTo(expectedLanguageValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExceptionAs(
-                    expectedLanguageValidationException))), 
-                        Times.Once);
+                broker.LogError(It.Is(SameExceptionAs(expectedLanguageValidationException))), Times.Once);
 
+            this.storageBrokerMock.Verify(broker => broker.InsertLanguageAsync(It.IsAny<Language>()), Times.Never);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
-            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
+
