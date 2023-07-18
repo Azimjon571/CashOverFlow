@@ -13,6 +13,7 @@ using CashOverFlow.Services.Foundations.Languages;
 using Moq;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
 
 namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
 {
@@ -35,8 +36,22 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
                 dateTimeBroker: this.dateTimeBrokerMock.Object);
 
         }
+        public static TheoryData InvalidMinutes()
+        {
+            int minutesFuture = GetRandomNumber();
+            int minutesPast = GetRandomNegativeNumber();
+
+            return new TheoryData<int>
+            {
+                minutesFuture,
+                minutesPast
+            };
+        }
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 9).GetValue();
+
+        private static int GetRandomNegativeNumber() =>
+            -1 * new IntRange(min: 2, max: 9).GetValue();
 
         private DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: DateTime.UtcNow).GetValue();
