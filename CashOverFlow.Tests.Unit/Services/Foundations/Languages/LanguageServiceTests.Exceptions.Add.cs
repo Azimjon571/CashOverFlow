@@ -3,6 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
+using System;
 using System.Data;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Languages;
@@ -91,6 +92,46 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.dateTimeBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfLanguageServerErrorOccursAndLogItAsync()
+        {
+            //given
+            Language someLanguage = CreateRandomLanguage();
+            var serviceException = new Exception();
+            
+            var failedLanguageServiceException = 
+                new FailedLanguageServiceException(serviceException);
+            
+            var expectedLanguageServiceException =
+                new LanguageServiceException(failedLanguageServiceException);
+
+            this.dateTimeBrokerMock.Setup(broker =>
+                broker.GetCurrentDateTimeOffset()).Throws(serviceException);
+
+            //when
+            ValueTask<Language> addLanguageTask = 
+                this.languageService.AddLanguageAsync(someLanguage);
+
+            LanguageServiceException actualLanguageServiceException =
+                await Assert.ThrowsAsync<LanguageServiceException>(addLanguageTask.AsTask);
+
+            //then
+            actualLanguageServiceException.Should()
+                .BeEquivalentTo(expectedLanguageServiceException);
+
+            this.dateTimeBrokerMock.Verify(broker =>
+                broker.GetCurrentDateTimeOffset(), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLanguageServiceException))),
+                        Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.dateTimeBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
