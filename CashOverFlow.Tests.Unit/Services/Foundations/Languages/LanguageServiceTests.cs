@@ -28,9 +28,9 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
 
         public LanguageServiceTests()
         {
-            this.storageBrokerMock=new Mock<IStorageBroker>();
+            this.storageBrokerMock = new Mock<IStorageBroker>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
-            this.dateTimeBrokerMock=new Mock<IDateTimeBroker>();
+            this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
 
             this.languageService = new LanguageService(
                 storageBroker: this.storageBrokerMock.Object,
@@ -55,7 +55,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
 
         private SqlException CreateSqlException() =>
             (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
-        
+
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 9).GetValue();
 
@@ -66,7 +66,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             new DateTimeRange(earliestDate: DateTime.UtcNow).GetValue();
 
         private Language CreateRandomLanguage() =>
-            CreateLanguageFiller(dates:GetRandomDateTimeOffset()).Create();
+            CreateLanguageFiller(dates: GetRandomDateTimeOffset()).Create();
 
         private Language CreateRandomLanguage(DateTimeOffset dates) =>
             CreateLanguageFiller(dates).Create();

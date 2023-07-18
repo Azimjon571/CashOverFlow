@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Reflection.Metadata;
 using CashOverFlow.Models.Languages;
 using CashOverFlow.Models.Languages.Exceptions;
 
@@ -25,7 +23,7 @@ namespace CashOverFlow.Services.Foundations.Languages
                     secondDateName: nameof(Language.UpdatedDate)),
 
                     Parameter: nameof(Language.CreatedDate)));
-        
+
         }
 
         private static void ValidationLanguageIsNotNull(Language language)
@@ -75,10 +73,10 @@ namespace CashOverFlow.Services.Foundations.Languages
             return timeDifference.TotalSeconds is > 60 or < 0;
         }
 
-        private void Validate(params(dynamic Rule, string Parameter)[] validations)
+        private void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidLanguageException = new InvalidLanguageException();
-            foreach ((dynamic rule,string parameter) in validations)
+            foreach ((dynamic rule, string parameter) in validations)
             {
                 if (rule.Condition)
                 {

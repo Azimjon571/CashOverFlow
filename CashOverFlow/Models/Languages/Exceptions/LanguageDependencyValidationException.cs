@@ -7,10 +7,10 @@ using Xeptions;
 
 namespace CashOverFlow.Models.Languages.Exceptions
 {
-    public class LanguageDependencyValidationException:Xeption
+    public class LanguageDependencyValidationException : Xeption
     {
         public LanguageDependencyValidationException(Xeption innerException)
-            :base(message: "Location dependency validation error occurred, fix the error and try again.",innerException)
-        {}
+            : base(message: "Location dependency validation error occurred, fix the error and try again.", innerException)
+        { }
     }
 }

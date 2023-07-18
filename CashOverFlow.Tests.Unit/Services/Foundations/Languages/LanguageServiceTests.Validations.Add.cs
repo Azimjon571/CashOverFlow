@@ -21,7 +21,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             //given
             Language nullLanguage = null;
             var nullLanguageException = new NullLanguageException();
-            
+
             var expectedLanguageValidationException =
                 new LanguageValidationException(nullLanguageException);
 
@@ -69,12 +69,12 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             invalidLanguageException.AddData(
                 key: nameof(Language.CreatedDate),
                 values: "Date is required");
-            
+
             invalidLanguageException.AddData(
                 key: nameof(Language.UpdatedDate),
                 values: "Date is required");
 
-            var expectedLanguageValidationException = 
+            var expectedLanguageValidationException =
                 new LanguageValidationException(invalidLanguageException);
 
             //when
@@ -89,7 +89,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedLanguageValidationException))), 
+                    expectedLanguageValidationException))),
                         Times.Once);
 
             this.storageBrokerMock.Verify(broker =>

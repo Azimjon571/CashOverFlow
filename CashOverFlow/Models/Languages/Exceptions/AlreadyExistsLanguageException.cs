@@ -8,10 +8,10 @@ using Xeptions;
 
 namespace CashOverFlow.Models.Languages.Exceptions
 {
-    public class AlreadyExistsLanguageException:Xeption
+    public class AlreadyExistsLanguageException : Xeption
     {
         public AlreadyExistsLanguageException(Exception innerException)
-            :base(message: "Location already exists.",innerException)
-        {}
+            : base(message: "Location already exists.", innerException)
+        { }
     }
 }

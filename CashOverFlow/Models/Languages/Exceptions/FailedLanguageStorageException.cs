@@ -4,16 +4,14 @@
 //=================================================
 
 using System;
-using CashOverFlow.Models.Locations;
-using Microsoft.Identity.Client.Extensions.Msal;
 using Xeptions;
 
 namespace CashOverFlow.Models.Languages.Exceptions
 {
-    public class FailedLanguageStorageException:Xeption
+    public class FailedLanguageStorageException : Xeption
     {
         public FailedLanguageStorageException(Exception innerException)
-        :base(message:"Failed language storage exception occurred, contact support.", innerException)
-        {}
+        : base(message: "Failed language storage exception occurred, contact support.", innerException)
+        { }
     }
 }

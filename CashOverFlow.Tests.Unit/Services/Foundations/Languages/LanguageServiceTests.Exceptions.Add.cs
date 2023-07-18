@@ -4,7 +4,6 @@
 //=================================================
 
 using System;
-using System.Data;
 using System.Threading.Tasks;
 using CashOverFlow.Models.Languages;
 using CashOverFlow.Models.Languages.Exceptions;
@@ -30,7 +29,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             this.dateTimeBrokerMock.Setup(broker =>
                 broker.GetCurrentDateTimeOffset()).Throws(sqlException);
             //when
-            ValueTask<Language> addLanguageTask = 
+            ValueTask<Language> addLanguageTask =
                 this.languageService.AddLanguageAsync(someLanguage);
 
             LanguageDependencyException actualLanguageDependencyException =
@@ -44,7 +43,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
                 broker.GetCurrentDateTimeOffset(), Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(It.Is(SameExceptionAs(expectedLanguageDependencyException))), 
+                broker.LogCritical(It.Is(SameExceptionAs(expectedLanguageDependencyException))),
                     Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
@@ -63,10 +62,10 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             Language someLamguage = CreateRandomLanguage();
             var duplicateKeyException = new DuplicateKeyException(someMessage);
 
-            var alreadyExistsLanguageException = 
+            var alreadyExistsLanguageException =
                 new AlreadyExistsLanguageException(duplicateKeyException);
 
-            var expectedLanguageDependencyValidationException = 
+            var expectedLanguageDependencyValidationException =
                 new LanguageDependencyValidationException(alreadyExistsLanguageException);
 
             this.dateTimeBrokerMock.Setup(broker =>
@@ -100,10 +99,10 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             //given
             Language someLanguage = CreateRandomLanguage();
             var serviceException = new Exception();
-            
-            var failedLanguageServiceException = 
+
+            var failedLanguageServiceException =
                 new FailedLanguageServiceException(serviceException);
-            
+
             var expectedLanguageServiceException =
                 new LanguageServiceException(failedLanguageServiceException);
 
@@ -111,7 +110,7 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
                 broker.GetCurrentDateTimeOffset()).Throws(serviceException);
 
             //when
-            ValueTask<Language> addLanguageTask = 
+            ValueTask<Language> addLanguageTask =
                 this.languageService.AddLanguageAsync(someLanguage);
 
             LanguageServiceException actualLanguageServiceException =

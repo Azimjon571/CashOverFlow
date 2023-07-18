@@ -10,6 +10,6 @@ namespace CashOverFlow.Services.Foundations.Languages
 {
     public interface ILanguageService
     {
-        ValueTask<Language>AddLanguageAsync(Language language);
+        ValueTask<Language> AddLanguageAsync(Language language);
     }
 }

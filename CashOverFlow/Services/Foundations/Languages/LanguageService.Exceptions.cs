@@ -17,7 +17,7 @@ namespace CashOverFlow.Services.Foundations.Languages
     {
         private delegate ValueTask<Language> ReturningLanguageFunction();
 
-        private async ValueTask<Language>TryCatch(ReturningLanguageFunction returningLanguageFunction)
+        private async ValueTask<Language> TryCatch(ReturningLanguageFunction returningLanguageFunction)
         {
             try
             {
@@ -27,27 +27,27 @@ namespace CashOverFlow.Services.Foundations.Languages
             {
                 throw CreateAndLogLanguageValidationException(nullLanguageException);
             }
-            catch(InvalidLanguageException invalidLanguageException)
+            catch (InvalidLanguageException invalidLanguageException)
             {
                 throw CreateAndLogLanguageValidationException(invalidLanguageException);
             }
-            catch(SqlException sqlException)
+            catch (SqlException sqlException)
             {
-                var failedLanguageStorageException = 
+                var failedLanguageStorageException =
                     new FailedLanguageStorageException(sqlException);
 
                 throw CreateAndLogLanguageCriticalDependencyException(failedLanguageStorageException);
             }
-            catch(DuplicateKeyException duplicateKeyException)
+            catch (DuplicateKeyException duplicateKeyException)
             {
-                var alreadyExistsLanguageException = 
+                var alreadyExistsLanguageException =
                     new AlreadyExistsLanguageException(duplicateKeyException);
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsLanguageException);
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
-                var failedLanguageServiceException = 
+                var failedLanguageServiceException =
                     new FailedLanguageServiceException(exception);
 
                 throw CreateAndLogServiceException(failedLanguageServiceException);
@@ -57,9 +57,9 @@ namespace CashOverFlow.Services.Foundations.Languages
         private LanguageValidationException CreateAndLogLanguageValidationException(Xeption exception)
         {
             var languageValidationException = new LanguageValidationException(exception);
-            
+
             this.loggingBroker.LogError(languageValidationException);
-            
+
             return languageValidationException;
         }
 

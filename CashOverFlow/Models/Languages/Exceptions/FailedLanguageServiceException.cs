@@ -8,10 +8,10 @@ using Xeptions;
 
 namespace CashOverFlow.Models.Languages.Exceptions
 {
-    public class FailedLanguageServiceException: Xeption
+    public class FailedLanguageServiceException : Xeption
     {
         public FailedLanguageServiceException(Exception innerException)
-            :base(message: "Language service error occured, contact support.", innerException)
-        {}
+            : base(message: "Language service error occured, contact support.", innerException)
+        { }
     }
 }

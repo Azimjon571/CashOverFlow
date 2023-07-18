@@ -7,10 +7,10 @@ using Xeptions;
 
 namespace CashOverFlow.Models.Languages.Exceptions
 {
-    public class InvalidLanguageException:Xeption
+    public class InvalidLanguageException : Xeption
     {
         public InvalidLanguageException()
-            :base(message:"Language is invalid.")
-        {}
+            : base(message: "Language is invalid.")
+        { }
     }
 }

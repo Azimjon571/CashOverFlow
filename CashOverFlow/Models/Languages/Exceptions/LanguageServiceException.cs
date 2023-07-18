@@ -10,7 +10,7 @@ namespace CashOverFlow.Models.Languages.Exceptions
     public class LanguageServiceException : Xeption
     {
         public LanguageServiceException(Xeption innerException)
-            :base(message: "Location service error occured, contact support.",innerException)
-        {}
+            : base(message: "Location service error occured, contact support.", innerException)
+        { }
     }
 }
