@@ -5,11 +5,13 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using CashOverFlow.Brokers.DateTimes;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
 using CashOverFlow.Models.Languages;
 using CashOverFlow.Services.Foundations.Languages;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 using Xeptions;
@@ -47,6 +49,9 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
                 minutesPast
             };
         }
+
+        private SqlException CreateSqlException() =>
+            (SqlException)FormatterServices.GetUninitializedObject(typeof(SqlException));
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 9).GetValue();
 
