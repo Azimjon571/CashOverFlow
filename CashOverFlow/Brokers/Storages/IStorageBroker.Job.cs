@@ -6,16 +6,16 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using CashOverFlow.Models.Job;
+using CashOverFlow.Models.Jobs;
 
 namespace CashOverFlow.Brokers.Storages
 {
     public partial interface IStorageBroker
     {
-        ValueTask<Job> InsertJobAsync(Job job);
-        IQueryable<Job> SelectAlljobAsync();
-        ValueTask<Job> SelectJobByIdAsync(Guid Id);
-        ValueTask<Job> UpdateJobAsync(Job job);
-        ValueTask<Job> DeletejobAsync(Job job);
+        ValueTask<Jobs> InsertJobAsync(Jobs job);
+        IQueryable<Jobs> SelectAlljobAsync();
+        ValueTask<Jobs> SelectJobByIdAsync(Guid Id);
+        ValueTask<Jobs> UpdateJobAsync(Jobs job);
+        ValueTask<Jobs> DeletejobAsync(Jobs job);
     }
 }

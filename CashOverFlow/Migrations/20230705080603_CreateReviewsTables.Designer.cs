@@ -25,7 +25,7 @@ namespace CashOverFlow.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CashOverFlow.Models.Job.Job", b =>
+            modelBuilder.Entity("CashOverFlow.Models.Jobs.Jobs", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

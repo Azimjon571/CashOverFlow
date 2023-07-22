@@ -39,7 +39,7 @@ namespace CashOverFlow.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("CashOverFlow.Models.Job.Job", b =>
+            modelBuilder.Entity("CashOverFlow.Models.Jobs.Jobs", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

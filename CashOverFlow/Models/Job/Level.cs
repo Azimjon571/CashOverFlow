@@ -3,7 +3,7 @@
 // Free To Use To Find Comfort and Peace
 //=================================================
 
-namespace CashOverFlow.Models.Job
+namespace CashOverFlow.Models.Jobs
 {
     public enum Level
     {

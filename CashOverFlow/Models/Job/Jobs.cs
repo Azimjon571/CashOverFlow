@@ -5,9 +5,9 @@
 
 using System;
 
-namespace CashOverFlow.Models.Job
+namespace CashOverFlow.Models.Jobs
 {
-    public class Job
+    public class Jobs
     {
         public Guid Id { get; set; }
         public string Title { get; set; }

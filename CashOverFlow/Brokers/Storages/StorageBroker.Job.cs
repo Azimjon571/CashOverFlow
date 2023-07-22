@@ -6,28 +6,28 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using CashOverFlow.Models.Job;
+using CashOverFlow.Models.Jobs;
 using Microsoft.EntityFrameworkCore;
 
 namespace CashOverFlow.Brokers.Storages
 {
     public partial class StorageBroker
     {
-        public DbSet<Job> Jobs { get; set; }
+        public DbSet<Jobs> Jobs { get; set; }
 
-        public async ValueTask<Job> InsertJobAsync(Job job) =>
+        public async ValueTask<Jobs> InsertJobAsync(Jobs job) =>
             await InsertAsync(job);
 
-        public IQueryable<Job> SelectAlljobAsync() =>
-            SelectAll<Job>();
+        public IQueryable<Jobs> SelectAlljobAsync() =>
+            SelectAll<Jobs>();
 
-        public async ValueTask<Job> SelectJobByIdAsync(Guid Id) =>
-            await SelectAsync<Job>(Id);
+        public async ValueTask<Jobs> SelectJobByIdAsync(Guid Id) =>
+            await SelectAsync<Jobs>(Id);
 
-        public async ValueTask<Job> UpdateJobAsync(Job job) =>
+        public async ValueTask<Jobs> UpdateJobAsync(Jobs job) =>
             await UpdateAsync(job);
 
-        public async ValueTask<Job> DeletejobAsync(Job job) =>
+        public async ValueTask<Jobs> DeletejobAsync(Jobs job) =>
             await DeleteAsync(job);
     }
 }
