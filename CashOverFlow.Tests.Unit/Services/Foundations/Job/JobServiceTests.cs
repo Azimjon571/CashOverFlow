@@ -4,6 +4,7 @@
 //=================================================
 
 using System;
+using System.Linq.Expressions;
 using CashOverFlow.Brokers.DateTimes;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
@@ -11,6 +12,7 @@ using CashOverFlow.Models.Jobs;
 using CashOverFlow.Services.Foundations.Job;
 using Moq;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace CashOverFlow.Tests.Unit.Services.Foundations.Job
 {
@@ -36,6 +38,9 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Job
             new DateTimeRange(earliestDate: DateTime.UtcNow).GetValue();
         private Jobs CreateRandomJobs() =>
             CreateJobFiller(date: GetRandomDateTimeOffset()).Create();
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
 
         private Filler<Jobs> CreateJobFiller(DateTimeOffset date)
         {

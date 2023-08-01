@@ -10,7 +10,7 @@ namespace CashOverFlow.Models.Languages.Exceptions
     public class LanguageValidationException : Xeption
     {
         public LanguageValidationException(Xeption innerException)
-            : base(message: "Language validation error occured, fix the errors and try again, innerException")
+            : base(message: "Language validation error occured, fix the errors and try again", innerException)
         { }
     }
 }
