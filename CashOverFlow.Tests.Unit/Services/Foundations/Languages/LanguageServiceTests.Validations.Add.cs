@@ -67,6 +67,10 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
                 values: "Id is required");
 
             invalidLanguageException.AddData(
+                key: nameof(Language.Name),
+                values: "Text is required");
+
+            invalidLanguageException.AddData(
                 key: nameof(Language.CreatedDate),
                 values: "Date is required");
 
@@ -114,6 +118,9 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Languages
             invalidLanguageException.AddData(
                 key: nameof(Language.CreatedDate),
                 values: $"Date is not same as {nameof(Language.UpdatedDate)}");
+
+            this.dateTimeBrokerMock.Setup(broker => broker.GetCurrentDateTimeOffset())
+                .Returns(randomDate);
 
             var expectedLanguageValidationException = new LanguageValidationException(invalidLanguageException);
 
