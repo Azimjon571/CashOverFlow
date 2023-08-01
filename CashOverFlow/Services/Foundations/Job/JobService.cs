@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CashOverFlow.Brokers.DateTimes;
 using CashOverFlow.Brokers.Loggings;
 using CashOverFlow.Brokers.Storages;
+using CashOverFlow.Models.Job.Exceptions;
 using CashOverFlow.Models.Jobs;
 
 namespace CashOverFlow.Services.Foundations.Job
@@ -27,7 +28,26 @@ namespace CashOverFlow.Services.Foundations.Job
             this.dateTimeBroker = dateTimeBroker;
         }
 
-        public async ValueTask<Jobs> AddJobAsync(Jobs jobs) =>
-            await this.storageBroker.InsertJobAsync(jobs);
+        public async ValueTask<Jobs> AddJobAsync(Jobs jobs)
+        {
+            try
+            {
+                if (jobs is null)
+                {
+                    throw new NullJobException();
+                }
+                
+                return await this.storageBroker.InsertJobAsync(jobs);
+            }
+            catch (NullJobException nullJobExceprion)
+            {
+                var jobValidationException =
+                    new JobValidationException(nullJobExceprion);
+
+                this.loggingBroker.LogError(jobValidationException);
+
+                throw jobValidationException;
+            }
+        }
     }
 }
