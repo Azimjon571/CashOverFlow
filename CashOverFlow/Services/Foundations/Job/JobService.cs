@@ -27,7 +27,7 @@ namespace CashOverFlow.Services.Foundations.Job
             this.dateTimeBroker = dateTimeBroker;
         }
 
-        public ValueTask<Jobs> AddJobAsync(Jobs jobs)=>
-            throw new System.NotImplementedException();
+        public async ValueTask<Jobs> AddJobAsync(Jobs jobs) =>
+            await this.storageBroker.InsertJobAsync(jobs);
     }
 }
