@@ -19,6 +19,10 @@ namespace CashOverFlow.Services.Foundations.Job
             {
                 throw CreateAndLogJobValidationException(nullJobExceprion);
             }
+            catch(InvalidJobException  invalidJobExceprion)
+            {
+                throw CreateAndLogJobValidationException(invalidJobExceprion);
+            }
         }
 
         private JobValidationException CreateAndLogJobValidationException(Xeption exception)
