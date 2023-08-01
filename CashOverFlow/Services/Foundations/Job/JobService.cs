@@ -12,7 +12,7 @@ using CashOverFlow.Models.Jobs;
 
 namespace CashOverFlow.Services.Foundations.Job
 {
-    public class JobService : IJobService
+    public partial class JobService : IJobService
     {
         private readonly IStorageBroker storageBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -28,26 +28,12 @@ namespace CashOverFlow.Services.Foundations.Job
             this.dateTimeBroker = dateTimeBroker;
         }
 
-        public async ValueTask<Jobs> AddJobAsync(Jobs jobs)
+        public ValueTask<Jobs> AddJobAsync(Jobs jobs) =>
+        TryCatch(async () =>
         {
-            try
-            {
-                if (jobs is null)
-                {
-                    throw new NullJobException();
-                }
-                
-                return await this.storageBroker.InsertJobAsync(jobs);
-            }
-            catch (NullJobException nullJobExceprion)
-            {
-                var jobValidationException =
-                    new JobValidationException(nullJobExceprion);
+            ValidateJobOnAdd(jobs);
 
-                this.loggingBroker.LogError(jobValidationException);
-
-                throw jobValidationException;
-            }
-        }
+            return await this.storageBroker.InsertJobAsync(jobs);
+        });
     }
 }
