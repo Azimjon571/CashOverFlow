@@ -46,5 +46,59 @@ namespace CashOverFlow.Tests.Unit.Services.Foundations.Job
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task ShouldThrowValidationExceptionOnAddIfJobIsInvalidAndLogItAsync(
+            string invalidText)
+        {
+            //given
+            var invalidJob = new Jobs
+            {
+                Title = invalidText,
+            };
+
+            var invalidJobException = new InvalidJobException();
+
+            invalidJobException.AddData(
+                key: nameof(Jobs.Id),
+                values: "Id is required");
+
+            invalidJobException.AddData(
+                key: nameof(Jobs.Title),
+                values: "Title is required");
+
+            invalidJobException.AddData(
+                key: nameof(Jobs.CreatedDate),
+                values: "Date is required");
+
+            invalidJobException.AddData(
+                key: nameof(Jobs.UpdatedDate),
+                values: "Date is required");
+
+            var expectedJobValidationException =
+                new JobValidationException(invalidJobException);
+
+            //when
+            ValueTask<Jobs> addJobTask = this.jobService.AddJobAsync(invalidJob);
+
+            JobValidationException actualJobValidationException = 
+                await Assert.ThrowsAsync<JobValidationException>(addJobTask.AsTask);
+
+            //then
+            actualJobValidationException.Should().BeEquivalentTo(expectedJobValidationException);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedJobValidationException))),
+                        Times.Once);
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.InsertJobAsync(It.IsAny<Jobs>()), Times.Never);
+
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.storageBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
